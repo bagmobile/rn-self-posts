@@ -32,14 +32,14 @@ export const MainScreen = ({navigation}) => {
             }}>
             <Tab.Screen name="AllPostsScreen" options={{
                 title: 'All',
-                tabBarIcon: ({ focused, color, size }) => <Ionicons name="md-list-sharp" size={20} color={color} />,
+                tabBarIcon: ({color}) => <Ionicons name="md-list-sharp" size={20} color={color}/>,
                 tabBarBadge: DATA.length
             }}>
                 {props => <Posts {...props} posts={DATA}/>}
             </Tab.Screen>
             <Tab.Screen name="FavoritePostsScreen" options={{
                 title: 'Favorite',
-                tabBarIcon: ({ focused, color, size }) => <Ionicons name="bookmarks-outline" size={20} color={color} />,
+                tabBarIcon: ({color}) => <Ionicons name="bookmarks-outline" size={20} color={color}/>,
                 tabBarBadge: DATA.filter(item => item.booked).length
             }}>
                 {props => <Posts {...props} posts={DATA.filter(item => item.booked)}/>}
