@@ -1,23 +1,49 @@
-import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import React, {useLayoutEffect} from 'react';
 import {DATA} from "../../data";
-import {Post} from "../components/Post";
+import {PhotoButton} from "../components/ui/PhotoButton";
+import {MenuButton} from "../components/ui/MenuButton";
+import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
+import {Posts} from "../components/Posts";
+import {Ionicons} from "@expo/vector-icons";
+import {MAIN_COLOR} from "../../styles";
+
+const Tab = createBottomTabNavigator();
 
 export const MainScreen = ({navigation}) => {
 
-    const renderItem = ({item}) => {
-        return (<Post post={item} onView={() => navigation.navigate('ViewPost', {id: item.id})}/>);
-    }
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: 'Posts',
+            headerRight: () => <PhotoButton onPress={() => {
+            }}/>,
+            headerLeft: () => <MenuButton onPress={() => {
+            }}/>
+        });
+    }, [navigation]);
 
     return (
-        <View style={styles.container}>
-            <FlatList data={DATA} renderItem={renderItem} keyExtractor={item => item.id}/>
-        </View>
+        <Tab.Navigator
+            screenOptions={{
+                headerShown: false,
+                tabBarActiveTintColor: MAIN_COLOR,
+                tabBarInactiveTintColor: '#1f1d1e',
+                tabBarLabelPosition: 'beside-icon',
+
+            }}>
+            <Tab.Screen name="AllPostsScreen" options={{
+                title: 'All',
+                tabBarIcon: ({ focused, color, size }) => <Ionicons name="md-list-sharp" size={20} color={color} />,
+                tabBarBadge: DATA.length
+            }}>
+                {props => <Posts {...props} posts={DATA}/>}
+            </Tab.Screen>
+            <Tab.Screen name="FavoritePostsScreen" options={{
+                title: 'Favorite',
+                tabBarIcon: ({ focused, color, size }) => <Ionicons name="bookmarks-outline" size={20} color={color} />,
+                tabBarBadge: DATA.filter(item => item.booked).length
+            }}>
+                {props => <Posts {...props} posts={DATA.filter(item => item.booked)}/>}
+            </Tab.Screen>
+        </Tab.Navigator>
     );
 }
-
-const styles = StyleSheet.create({
-    container: {
-        padding: 10
-    }
-});

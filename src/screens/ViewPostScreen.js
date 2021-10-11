@@ -1,15 +1,19 @@
-import React, {useEffect} from 'react';
+import React, {useLayoutEffect} from 'react';
 import {Alert, Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
 import {getPost} from "../../data";
 import {getDate} from "../../utils";
+import {FavoriteButton} from "../components/ui/FavoriteButton";
 
 export const ViewPostScreen = ({route, navigation}) => {
 
     const post = getPost(route.params.id);
 
-    useEffect(() => {
-        navigation.setOptions({title: getDate(post.date)});
-    }, []);
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            title: getDate(post.date),
+            headerRight: () => <FavoriteButton isFavorite={post.booked}/>
+        });
+    }, [navigation]);
 
     const deleteHandler = () => {
         Alert.alert(
