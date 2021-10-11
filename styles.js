@@ -1,5 +1,7 @@
 import {StyleSheet} from "react-native";
 
+export const MAIN_COLOR = '#373ba3';
+
 export const styles = StyleSheet.create({
     containerDefaultCenter: {
         flex: 1,
@@ -11,7 +13,7 @@ export const styles = StyleSheet.create({
 export const optionStyles = {
     headerDefault: {
         headerStyle: {
-            backgroundColor: '#373ba3'
+            backgroundColor: MAIN_COLOR
         },
         headerTintColor: '#fff',
         headerTitleStyle: {

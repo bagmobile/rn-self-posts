@@ -6,6 +6,8 @@ import {AboutScreen} from "../screens/AboutScreen";
 import {optionStyles} from "../../styles";
 import {ViewPostScreen} from "../screens/ViewPostScreen";
 import {FavoritePostsScreen} from "../screens/FavoritePostsScreen";
+import {PhotoButton} from "../components/ui/PhotoButton";
+import {MenuButton} from "../components/ui/MenuButton";
 
 
 const Stack = createNativeStackNavigator();
@@ -21,7 +23,13 @@ export const AppNavigation = ({}) => {
                 <Stack.Screen
                     name="Main"
                     component={MainScreen}
-                    /*options={{headerTitle: () => <ImageHeader/>}}*/
+                    options={{
+                        title: 'Posts',
+                        headerRight: () => <PhotoButton onPress={() => {
+                        }}/>,
+                        headerLeft: () => <MenuButton onPress={() => {
+                        }}/>
+                    }}
                 />
                 <Stack.Screen
                     name="About"
