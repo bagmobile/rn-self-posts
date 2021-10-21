@@ -5,7 +5,7 @@ import {Post} from "./Post";
 export const Posts = ({navigation, posts}) => {
 
     const renderItem = ({item}) => {
-        return (<Post post={item} onView={() => navigation.navigate('ViewPost', {id: item.id})}/>);
+        return (<Post post={item} onView={() => navigation.navigate('Post', {id: item.id})}/>);
     }
 
     return (

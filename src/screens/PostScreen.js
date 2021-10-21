@@ -4,14 +4,14 @@ import {getPost} from "../../data";
 import {getDate} from "../../utils";
 import {FavoriteButton} from "../components/ui/FavoriteButton";
 
-export const ViewPostScreen = ({route, navigation}) => {
+export const PostScreen = ({route, navigation}) => {
 
     const post = getPost(route.params.id);
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title: getDate(post.date),
-            headerRight: () => <FavoriteButton isFavorite={post.booked}/>
+            headerRight: () => <FavoriteButton isFavorite={post.booked}/>,
         });
     }, [navigation]);
 
@@ -22,6 +22,7 @@ export const ViewPostScreen = ({route, navigation}) => {
             [
                 {
                     text: 'Delete', style: 'destructive', onPress: () => {
+                        navigation.navigate('About')
                     }
                 },
                 {text: 'Cancel', style: 'cancel'}
