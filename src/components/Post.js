@@ -1,10 +1,9 @@
 import React from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {getDate} from "../../utils";
-import {DATA} from "../../data";
 
 
-export const Post = ({post = DATA[0], onView}) => {
+export const Post = ({post, onView}) => {
 
     return (
         <TouchableOpacity activeOpacity={0.7} onPress={onView}>

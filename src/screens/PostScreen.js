@@ -1,19 +1,31 @@
 import React, {useLayoutEffect} from 'react';
 import {Alert, Button, Image, ScrollView, StyleSheet, Text, View} from 'react-native';
-import {getPost} from "../../data";
 import {getDate} from "../../utils";
 import {FavoriteButton} from "../components/ui/FavoriteButton";
+import {useDispatch, useSelector} from "react-redux";
+import {deletePost, toggleFavoritePost} from "../store/actions/postAction";
 
 export const PostScreen = ({route, navigation}) => {
 
-    const post = getPost(route.params.id);
+    const id = route.params.id;
+    const dispatch = useDispatch();
+
+    const post = useSelector(({postReducer}) => postReducer.posts.find(item => item.id === id));
+
+    const toggleFavoritePostHandler = () => {
+        dispatch(toggleFavoritePost(id))
+    }
+
+    const deletePostHandler = () => {
+        dispatch(deletePost(id));
+    }
 
     useLayoutEffect(() => {
         navigation.setOptions({
             title: getDate(post.date),
-            headerRight: () => <FavoriteButton isFavorite={post.booked}/>,
+            headerRight: () => <FavoriteButton isFavorite={post.booked} onPress={toggleFavoritePostHandler}/>,
         });
-    }, [navigation]);
+    }, [navigation, post]);
 
     const deleteHandler = () => {
         Alert.alert(
@@ -22,7 +34,8 @@ export const PostScreen = ({route, navigation}) => {
             [
                 {
                     text: 'Delete', style: 'destructive', onPress: () => {
-                        navigation.navigate('About')
+                        navigation.goBack();
+                        deletePostHandler();
                     }
                 },
                 {text: 'Cancel', style: 'cancel'}

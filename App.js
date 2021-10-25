@@ -1,8 +1,12 @@
+// noinspection JSUnusedGlobalSymbols
+
 import 'react-native-gesture-handler';
 import React from 'react';
 import {useFonts} from "expo-font";
 import AppLoading from "expo-app-loading";
 import {AppNavigation} from "./src/navigation/AppNavigation";
+import {Provider} from "react-redux";
+import store from "./src/store"
 
 export default function App() {
 
@@ -16,6 +20,8 @@ export default function App() {
     }
 
     return (
-        <AppNavigation/>
+        <Provider store={store}>
+            <AppNavigation/>
+        </Provider>
     );
 }
