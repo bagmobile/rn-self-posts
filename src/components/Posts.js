@@ -1,5 +1,5 @@
 import React from 'react';
-import {FlatList, StyleSheet, View} from 'react-native';
+import {FlatList, StyleSheet, Text, View} from 'react-native';
 import {Post} from "./Post";
 
 export const Posts = ({navigation, posts}) => {
@@ -10,6 +10,7 @@ export const Posts = ({navigation, posts}) => {
 
     return (
         <View style={styles.container}>
+            {!posts.length && <Text style={styles.centerText}>Add post please</Text>}
             <FlatList data={posts} renderItem={renderItem} keyExtractor={item => item.id}/>
         </View>
     );
@@ -17,6 +18,11 @@ export const Posts = ({navigation, posts}) => {
 
 const styles = StyleSheet.create({
     container: {
-        padding: 10
+        padding: 10,
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    centerText: {
     }
 });

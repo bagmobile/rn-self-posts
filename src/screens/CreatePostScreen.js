@@ -1,12 +1,15 @@
 import React, {useRef, useState} from 'react';
-import {Button, Image, Keyboard, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native';
+import {Button, Keyboard, ScrollView, StyleSheet, TextInput, TouchableWithoutFeedback, View} from 'react-native';
 import {MAIN_COLOR} from "../../styles";
 import {useDispatch} from "react-redux";
 import {addPost} from "../store/actions/postAction";
+import {AppImagePicker} from "../components/native/AppImagePicker";
 
 export const CreatePostScreen = ({navigation}) => {
     const [text, setText] = useState('');
-    const imageRef = useRef();
+    const imgRef = useRef(null);
+
+    console.log(text, imgRef.current);
 
     const dispatch = useDispatch();
 
@@ -14,13 +17,17 @@ export const CreatePostScreen = ({navigation}) => {
         const newPost = {
             id: (new Date()).toString(),
             text,
-            img: "https://designerdreamhomes.ru/wp-content/uploads/Amchit-Residence-15.jpg",
-            date:  new Date().toJSON(),
+            img: imgRef.current,
+            date: new Date().toJSON(),
             booked: false
         }
 
         dispatch(addPost(newPost));
         navigation.navigate('Main');
+    }
+
+    const takePhotoHandler = uri => {
+        imgRef.current = uri
     }
 
     return (
@@ -33,11 +40,13 @@ export const CreatePostScreen = ({navigation}) => {
                         onChangeText={setText}
                         multiline
                     />
-                    <Image
-                        ref={imageRef}
-                        style={styles.imgPreview}
-                        source={{uri:"https://designerdreamhomes.ru/wp-content/uploads/Amchit-Residence-15.jpg"}}/>
-                    <Button title="Save post" onPress={savePostHandler} color={styles.saveButton.color}/>
+                    <AppImagePicker onPick={takePhotoHandler}/>
+                    <Button
+                        title="Save post"
+                        onPress={savePostHandler}
+                        color={styles.saveButton.color}
+                        disabled={!text}
+                    />
                 </View>
             </TouchableWithoutFeedback>
         </ScrollView>
