@@ -1,14 +1,15 @@
 import {ADD_POST, DELETE_POST, LOAD_POSTS, TOGGLE_FAVORITE_POST} from "../typeActions";
 
 const initialState = {
-    posts: []
+    posts: [],
+    loading: true
 }
 
 export const postReducer = (state = initialState, action) => {
 
     switch (action.type) {
         case LOAD_POSTS:
-            return {...state, posts: action.payload};
+            return {...state, posts: action.payload, loading: false};
         case TOGGLE_FAVORITE_POST:
             return {
                 ...state,

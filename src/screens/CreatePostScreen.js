@@ -9,19 +9,15 @@ export const CreatePostScreen = ({navigation}) => {
     const [text, setText] = useState('');
     const imgRef = useRef(null);
 
-    console.log(text, imgRef.current);
-
     const dispatch = useDispatch();
 
     const savePostHandler = () => {
         const newPost = {
-            id: (new Date()).toString(),
             text,
             img: imgRef.current,
             date: new Date().toJSON(),
             booked: false
         }
-
         dispatch(addPost(newPost));
         navigation.navigate('Main');
     }

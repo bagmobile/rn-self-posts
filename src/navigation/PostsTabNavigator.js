@@ -3,7 +3,7 @@ import {Ionicons} from "@expo/vector-icons";
 import {Posts} from "../components/Posts";
 import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {Platform} from "react-native";
+import {ActivityIndicator, Platform, StyleSheet, View} from "react-native";
 import {createMaterialBottomTabNavigator} from "@react-navigation/material-bottom-tabs";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {loadPosts} from "../store/actions/postAction";
@@ -16,8 +16,10 @@ export const PostsTabNavigator = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        dispatch(loadPosts())
+        dispatch(loadPosts());
     }, []);
+
+    const loading = useSelector(({postReducer}) => postReducer.loading);
 
     const posts = useSelector(({postReducer}) => postReducer.posts);
 
@@ -27,6 +29,14 @@ export const PostsTabNavigator = () => {
     );
 
     const favoritePosts = useSelector(selectFavoritePosts);
+
+    if (loading) {
+        return (
+            <View style={styles.centerLoader}>
+                <ActivityIndicator color={MAIN_COLOR}/>
+            </View>
+        );
+    }
 
     return (
         <Tab.Navigator
@@ -56,3 +66,11 @@ export const PostsTabNavigator = () => {
         </Tab.Navigator>
     );
 }
+
+const styles = StyleSheet.create({
+    centerLoader: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center'
+    }
+})

@@ -13,7 +13,7 @@ export const PostScreen = ({route, navigation}) => {
     const post = useSelector(({postReducer}) => postReducer.posts.find(item => item.id === id));
 
     const toggleFavoritePostHandler = () => {
-        dispatch(toggleFavoritePost(id))
+        dispatch(toggleFavoritePost(id, !post.booked))
     }
 
     const deletePostHandler = () => {

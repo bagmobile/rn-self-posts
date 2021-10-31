@@ -1,3 +1,5 @@
+// noinspection JSUnresolvedVariable
+
 import React, {useEffect, useState} from 'react';
 import * as ImagePicker from "expo-image-picker";
 import {Button, Image, StyleSheet, View} from "react-native";
@@ -25,8 +27,6 @@ export const AppImagePicker = ({onPick}) => {
             aspect: [16, 9],
             quality: 1,
         });
-
-        console.log(result);
 
         if (!result.cancelled) {
             setImage(result.uri);
