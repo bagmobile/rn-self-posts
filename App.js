@@ -17,8 +17,9 @@ export default function App() {
 
     useEffect(() => {
         (async () => {
-            await DB.init()
+            await DB.init();
         })();
+
     }, []);
 
     if (!loadedFont) {
